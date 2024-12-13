@@ -2,6 +2,7 @@
 window.onload = () => {
     const todos = []; // Initialize the todos array
     const form = document.getElementById('todo-form');
+    
     form.onsubmit = (e) => {
         e.preventDefault(); // Prevent page reload on form submit
         const todo = document.getElementById('todo'); // Get the input field
@@ -10,11 +11,23 @@ window.onload = () => {
         todos.push(todoText); // Add the new todo to the todos array
 
         const todoList = document.getElementById('todo-list'); // Get the UL element
-        const todosTemplate = todos.map(t => '<li>' + t + '</li>'); // Create list items
-        todoList.innerHTML = todosTemplate.join(''); // Update the UL with the list items
-        document.querySelectorAll('#todo-list ')
+        
+        // Create list items dynamically from the todos array
+        const todosTemplate = todos.map((t, i) => `<li data-index="${i}">${t}</li>`).join('');
+        
+        // Update the UL with the list items
+        todoList.innerHTML = todosTemplate;
+        
+        // Add click event listeners to each list item
+        const todoItems = todoList.querySelectorAll('li');
+        todoItems.forEach((item, i) => {
+            item.addEventListener('click', () => {
+                console.log(item.textContent, i); // Log the content and index of the clicked item
+            });
+        });
     };
 };
+
 
 
 // estas son los elemsntos que vamos a utilizar para elminar los todos de nuestra aplicacion
